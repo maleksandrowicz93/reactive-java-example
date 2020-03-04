@@ -2,14 +2,8 @@ package com.github.maleksandrowicz93.reactivejavaexample.oberver;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class Downloader {
-
-    public static void main(String[] args) throws IOException {
-        new Downloader();
-    }
 
     private String[] url = {
             "https://bykowski.pl/spring-boot/",
@@ -18,7 +12,7 @@ public class Downloader {
             "https://bykowski.pl/c-i-mysql-integracja-net-z-baza-danych/"
     };
 
-    public Downloader() {
+    public Downloader(MyObservable myObservable) {
         for (int i = 0; i < url.length; i++) {
             int finalI = i;
             Thread thread = new Thread(() -> {
@@ -30,6 +24,7 @@ public class Downloader {
             });
             thread.start();
         }
+        myObservable.onFinish();
     }
 
     public static void readWebsite(String link, String fileName) throws IOException {
